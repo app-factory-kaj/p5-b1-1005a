@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T11:31:14Z",
+  "commit": "de261700eb4e6f2e15c96ab27907580fbaf28c37",
+  "baseUrl": "http://development-default.openchoreoapis.localhost:19080/p5-b1-1005a-greeter-http",
+  "isolation": "the greeter service is stateless (no container to create or own); each scenario asserts only on the response body of its own request",
+  "scenarios": [
+    {
+      "feature": "Greeting",
+      "featureFile": "specs/validation/acceptance/greeting.feature",
+      "line": 6,
+      "rule": "A named greeting addresses the caller by name",
+      "scenario": "A client requests a greeting with a name",
+      "tags": ["@story-1"],
+      "outcome": "passed",
+      "steps": [
+        { "text": "the greeter service is running", "keyword": "Given",
+          "command": "curl -sS -o /dev/null -w '%{http_code}' \"$BASE/hello?name=Ada\"",
+          "exit": 0, "observed": "200" },
+        { "text": "a Client calls \"GET /hello\" with name \"Ada\"", "keyword": "When",
+          "command": "curl -sS -i \"$BASE/hello?name=Ada\"" },
+        { "text": "the response is a JSON greeting that addresses \"Ada\"", "keyword": "Then",
+          "command": "curl -sS \"$BASE/hello?name=Ada\" | grep -q '\"message\":\"Hello, Ada!\"'",
+          "exit": 0, "observed": "{\"message\":\"Hello, Ada!\"}" }
+      ],
+      "evidence": {
+        "network": [{ "method": "GET", "url": "/hello?name=Ada", "status": 200 }]
+      }
+    },
+    {
+      "feature": "Greeting",
+      "featureFile": "specs/validation/acceptance/greeting.feature",
+      "line": 14,
+      "rule": "A greeting without a name still succeeds",
+      "scenario": "A client requests a greeting with no name",
+      "tags": ["@story-2"],
+      "outcome": "passed",
+      "steps": [
+        { "text": "the greeter service is running", "keyword": "Given",
+          "command": "curl -sS -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "a Client calls \"GET /hello\" with no name", "keyword": "When",
+          "command": "curl -sS -i \"$BASE/hello\"" },
+        { "text": "the response is a successful JSON greeting with a default message", "keyword": "Then",
+          "command": "curl -sS -o /dev/null -w '%{http_code}' \"$BASE/hello\" && curl -sS \"$BASE/hello\" | grep -q '\"message\":\"Hello, World!\"'",
+          "exit": 0, "observed": "200; {\"message\":\"Hello, World!\"}" }
+      ],
+      "evidence": {
+        "network": [{ "method": "GET", "url": "/hello", "status": 200 }]
+      }
+    }
+  ]
+}
