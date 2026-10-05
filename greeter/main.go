@@ -1,4 +1,5 @@
-// Command greeter runs a small, stateless HTTP service exposing GET /hello.
+// Command greeter runs a small, stateless HTTP service exposing GET /hello
+// and GET /farewell.
 package main
 
 import (
@@ -68,9 +69,26 @@ func helloHandler(cfg config) http.HandlerFunc {
 	}
 }
 
+func farewellHandler(cfg config) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			writeError(w, http.StatusMethodNotAllowed, fmt.Sprintf("method %s not allowed", r.Method))
+			return
+		}
+
+		name := r.URL.Query().Get("name")
+		if name == "" {
+			name = cfg.defaultName
+		}
+
+		writeJSON(w, http.StatusOK, Greeting{Message: fmt.Sprintf("Goodbye, %s!", name)})
+	}
+}
+
 func newMux(cfg config) *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/hello", helloHandler(cfg))
+	mux.HandleFunc("/farewell", farewellHandler(cfg))
 	return mux
 }
 
