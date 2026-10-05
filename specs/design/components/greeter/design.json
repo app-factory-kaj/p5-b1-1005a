@@ -8,7 +8,7 @@
   "entrypoint": "deployment/service",
   "exposure": "internet",
   "dependencies": [],
-  "description": "A small, stateless Go HTTP service exposing GET /hello, which takes an optional name query parameter and returns a JSON greeting. Built to the organization's Go service conventions (app-factory-kaj/e2e-reference): net/http, environment-based configuration with sensible defaults, wrapped errors, JSON error bodies. It does not persist anything, require authentication, or expose any endpoint beyond /hello.",
-  "stories": [1, 2],
+  "description": "A small, stateless Go HTTP service exposing GET /hello and GET /farewell, each taking an optional name query parameter and returning a JSON greeting or farewell message. Built to the organization's Go service conventions (app-factory-kaj/e2e-reference): net/http, environment-based configuration with sensible defaults, wrapped errors, JSON error bodies. It does not persist anything, require authentication, or expose any endpoint beyond /hello and /farewell.",
+  "stories": [1, 2, 3, 4],
   "skillsPinned": ["openapi-conventions", "go"]
 }

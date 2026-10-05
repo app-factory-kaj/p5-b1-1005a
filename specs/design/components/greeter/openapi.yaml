@@ -24,6 +24,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Greeting'
+  /farewell:
+    get:
+      operationId: getFarewell
+      summary: Return a JSON goodbye message for the given name, or a default goodbye
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The name to bid farewell to
+      responses:
+        '200':
+          description: The farewell
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Greeting'
 components:
   schemas:
     Greeting:
@@ -32,4 +50,4 @@ components:
       properties:
         message:
           type: string
-          description: The greeting text
+          description: The greeting or farewell text

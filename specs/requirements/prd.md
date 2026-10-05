@@ -6,7 +6,7 @@ Teams building services on this platform need a small, working example of a Go H
 
 ## Solution
 
-Greeter is a small, standalone Go HTTP service exposing a single endpoint: `GET /hello`, which takes a `name` parameter and returns a JSON greeting addressed to that name. It is built to the organization's Go service conventions so it can serve as a working reference other services can be modeled on.
+Greeter is a small, standalone Go HTTP service exposing two endpoints: `GET /hello`, which takes a `name` parameter and returns a JSON greeting addressed to that name, and `GET /farewell`, which takes a `name` parameter and returns a JSON goodbye message addressed to that name. It is built to the organization's Go service conventions so it can serve as a working reference other services can be modeled on.
 
 ## Actors
 
@@ -16,6 +16,8 @@ Greeter is a small, standalone Go HTTP service exposing a single endpoint: `GET 
 
 1. As a Client, I want to call `GET /hello` with a `name` value, so that I receive a JSON greeting addressed to that name.
 2. As a Client, I want to call `GET /hello` without a `name` value, so that I still receive a sensible default greeting rather than an error. *assumed*
+3. As a Client, I want to call `GET /farewell` with a `name` value, so that I receive a JSON goodbye message addressed to that name.
+4. As a Client, I want to call `GET /farewell` without a `name` value, so that I still receive a sensible default goodbye message rather than an error. *assumed*
 
 ## Product Decisions
 
@@ -29,7 +31,7 @@ Greeter is a small, standalone Go HTTP service exposing a single endpoint: `GET 
 - Persistence or storage of any kind — greeter is stateless.
 - Authentication, authorization, or per-user behavior.
 - Rate limiting, quotas, or multi-tenancy.
-- Any endpoint beyond `GET /hello`.
+- Any endpoint beyond `GET /hello` and `GET /farewell`.
 - Internationalization or localization of the greeting text.
 
 ## Open Questions
